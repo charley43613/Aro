@@ -1,4 +1,5 @@
-FROM open:jdk:8
-EXPOSE 8080
-ADD target/helloSb.jar helloSb.jar
-ENTRYPOINT ["java", "-jar", "/helloSb.jar"]
+FROM java:8-jdk-alpine
+COPY ./target/helloSb.jar /usr/app/
+WORKDIR /usr/app
+RUN sh -c 'helloSb.jar'
+ENTRYPOINT [ "java", "-jar", "helloSb.jar"]
