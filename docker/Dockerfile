@@ -24,4 +24,4 @@ FROM openjdk:11-jdk
 COPY --from=0 /build/target/helloSb.jar /app/target/helloSb.jar
 
 EXPOSE 8081
-ENTRYPOINT [ "java", "-jar", "/app/target/helloSb.jar", "--server.port=8080" ]
+ENTRYPOINT [ "java", "-jar", "/app/target/helloSb.jar", "--server.port=9010" ]
