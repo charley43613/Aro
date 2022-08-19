@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainDriver {
 	@RequestMapping("/")
 	    String home() {
-		return "Hello Redhat Openshift!";
+		return "Hello Redhat Openshift, happy Monday!";
 	 }
 	public static void main(String[] args) {
 		SpringApplication.run(MainDriver.class, args);
