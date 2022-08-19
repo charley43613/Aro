@@ -23,5 +23,5 @@ RUN mvn package -Dmaven.test.skip=true
 FROM openjdk:11-jdk
 COPY --from=0 /build/target/helloSb.jar /app/target/helloSb.jar
 
-EXPOSE 8081
+EXPOSE 9010
 ENTRYPOINT [ "java", "-jar", "/app/target/helloSb.jar", "--server.port=9010" ]
