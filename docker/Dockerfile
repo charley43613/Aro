@@ -9,7 +9,7 @@
 #
 # docker run -i --rm -p 8081:8081 springboot/sample-demo
 ####
-FROM java:8-jdk-alpine
+FROM quay.io/devfile/maven:3.8.1-openjdk-17-slim
 
 WORKDIR /build
 
@@ -20,7 +20,7 @@ RUN mvn dependency:go-offline
 COPY src src
 RUN mvn package -Dmaven.test.skip=true
 
-FROM openjdk:8-jdk
+FROM openjdk:11-jdk
 COPY --from=0 /build/target/helloSb.jar /app/target/helloSb.jar
 
 EXPOSE 9010
