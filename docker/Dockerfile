@@ -9,7 +9,7 @@
 #
 # docker run -i --rm -p 8081:8081 springboot/sample-demo
 ####
-FROM quay.io/devfile/maven:3.8.1-openjdk-17-slim
+FROM java:8-jdk-alpine
 
 WORKDIR /build
 
