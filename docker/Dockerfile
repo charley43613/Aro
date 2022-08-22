@@ -9,19 +9,16 @@
 #
 # docker run -i --rm -p 8081:8081 springboot/sample-demo
 ####
-FROM java:8-jdk-alpine
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-WORKDIR /build
+# Refer to Maven build -> finalName
+ARG JAR_FILE=target/spring-boot-web.jar
 
-# Build dependency offline to streamline build
-COPY pom.xml .
-RUN mvn dependency:go-offline
+# cd /opt/app
+WORKDIR /opt/app
 
-COPY src src
-RUN mvn package -Dmaven.test.skip=true
+# cp target/helloSb.jar /opt/app/helloSb.jar
+COPY ${JAR_FILE} app.jar
 
-FROM openjdk:11-jdk
-COPY --from=0 /build/target/helloSb.jar /app/target/helloSb.jar
-
-EXPOSE 9010
-ENTRYPOINT [ "java", "-jar", "/app/target/helloSb.jar", "--server.port=9010" ]
+# java -jar /opt/app/app.jar
+ENTRYPOINT ["java","-jar","helloSb.jar"]
