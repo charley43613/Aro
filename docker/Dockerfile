@@ -9,16 +9,19 @@
 #
 # docker run -i --rm -p 8081:8081 springboot/sample-demo
 ####
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM quay.io/devfile/maven:3.8.1-openjdk-17-slim
 
-# Refer to Maven build -> finalName
-ARG JAR_FILE=target/helloSb.jar
+WORKDIR /build
 
-# cd /opt/app
-WORKDIR /opt/app
+# Build dependency offline to streamline build
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# cp target/helloSb.jar /opt/app/helloSb.jar
-COPY ${JAR_FILE} app.jar
+COPY src src
+RUN mvn package -Dmaven.test.skip=true
 
-# java -jar /opt/app/app.jar
-ENTRYPOINT ["java","-jar","helloSb.jar"]
+FROM openjdk:11-jdk
+COPY --from=0 /build/target/helloSb.jar /app/target/helloSb.jar
+
+EXPOSE 9010
+ENTRYPOINT [ "java", "-jar", "/app/target/helloSb.jar", "--server.port=9010" ]
